@@ -127,6 +127,14 @@ class BST {
            recursively delete right sub-tree
            delete current node
         */
+         if( n == nullptr ) {
+	     return;
+	 }
+	 
+	 //delete left nodes, right node, and then delete current node
+	 deleteAll(n->left);
+	 deleteAll(n->right);
+	 delete n;
     }
 };
 

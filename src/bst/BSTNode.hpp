@@ -31,9 +31,9 @@ class BSTNode {
         return nullptr;
 
       }
-      while( successor::left != nullptr ) {
+      while( successor->left != nullptr ) {
 
-        successor = successor::left;
+        successor = successor->left;
 
       }
       return successor;

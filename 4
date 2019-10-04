@@ -32,52 +32,18 @@ class BST {
 
     /** TODO */
     virtual bool insert(const Data& item) { 
-        
-	//create a pointer for the current node at root track the height
-        BSTNode<Data>* currNode = root;
-	int currHeight = 0; 
-        
-	//loop down the tree until we reach where there isn't a node
-	while( currnode != nullptr ) {
 	    
-            //check to see if item is less than the current node
-            if( item.data < currNode->data ) {
+        BSTNode<Data>* currNode = root;
+        //check to see if item is less than the current node
+        if( item.data < currNode->data ) {
 
-	        // make the left node the current node
-	        currNode = currNode->left;
-		//increment the height since we are going down a level
-		currHeight++;
+            if( currNode->left == nullptr ) {
 
-	    }
-	    //check to see if item is greater than the current node
-	    else if( currNode->data < item.data ) {
+                BSTNode<Data> copyNode<Data>( item.data );
 
-	        // if there is a right child, make it the current node
-	        currNode = currNode->right;
-		//increment the height since we are going down a branch
-		currHeight++;
-
-	    }
-
-	    // if the node is already in the tree, don't insert it
-	    else {
-                return false;
 	    }
 
 	}
-
-	// now we are at the position where this new node should be
-	// create a copy of the node passed into the parameter
-        BSTNode<Data>* copyNode = new BSTNode<Data>( item.data );
-        currNode = copyNode;
-	//increment size and check to see if the height grew
-	isize++;
-        if( iheight < currheight ) {
-
-            iheight = currheight;
-
-	}
-        return true;
    
     }
 
@@ -85,18 +51,10 @@ class BST {
     virtual iterator find(const Data& item) const { return 0; }
 
     /** TODO */
-    unsigned int size() const {
-    
-        return isize;
-    
-    }
+    unsigned int size() const { return 0; }
 
     /** TODO */
-    int height() const {
-    
-        return iheight;
-    
-    }
+    int height() const { return 0; }
 
     /** TODO */
     bool empty() const {

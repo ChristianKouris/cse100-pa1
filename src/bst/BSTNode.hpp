@@ -7,38 +7,43 @@ using namespace std;
 template <typename Data>
 
 class BSTNode {
-  public:
-    BSTNode<Data>* left;
-    BSTNode<Data>* right;
-    BSTNode<Data>* parent;
-    Data const data;  // the const Data in this node.
+    public:
+        BSTNode<Data>* left;
+        BSTNode<Data>* right;
+        BSTNode<Data>* parent;
+        Data const data;  // the const Data in this node.
 
-    /** TODO */
-    BSTNode(const Data& d) : data(d) {
-    
-      parent = nullptr;
-      right = nullptr;
-      left = nullptr;
-    
-    }
+        /** This is the initializer for the constructor of the BSTNode. The
+         *  data variable is set and the parent and children nodes are null
+         *  Parameter: data - the general data that the Node will represent
+         */
+        BSTNode(const Data& d) : data(d) {
 
-    /** TODO */
-    BSTNode<Data>* successor() {
-     
-      BSTNode<Data>* successor = right;
-      if( successor == nullptr ) {
+            parent = nullptr;
+            right = nullptr;
+            left = nullptr;
 
-        return nullptr;
+        }
 
-      }
-      while( successor->left != nullptr ) {
+        /** The successor function will return the smallest value node
+         *  that has a greater data value than the current node
+         */
+        BSTNode<Data>* successor() {
 
-        successor = successor->left;
+            BSTNode<Data>* successor = right;
+            if( successor == nullptr ) {
 
-      }
-      return successor;
-    
-    }
+                return nullptr;
+
+            }
+            while( successor->left != nullptr ) {
+
+                successor = successor->left;
+
+            }
+            return successor;
+
+        }
 };
 
 /** DO NOT CHANGE THIS METHOD

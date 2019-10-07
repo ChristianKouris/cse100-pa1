@@ -7,44 +7,47 @@ using namespace std;
 
 template <typename Data>
 class BSTIterator : public iterator<input_iterator_tag, Data> {
-  private:
-    BSTNode<Data>* curr;
+    private:
+        BSTNode<Data>* curr;
 
-  public:
-    /** Constructor that initialize the current BSTNode
-     *  in this BSTIterator.
-     */
-    BSTIterator(BSTNode<Data>* curr) : curr(curr) {}
+    public:
+        /** Constructor that initialize the current BSTNode
+         *  in this BSTIterator.
+         */
+        BSTIterator(BSTNode<Data>* curr) : curr(curr) {}
 
-    /** Dereference operator. */
-    Data operator*() const { return curr->data; }
+        /** Dereference operator. */
+        Data operator*() const { return curr->data; }
 
-    /** Pre-increment operator. */
-    BSTIterator<Data>& operator++() {
-        curr = curr->successor();
-        return *this;
-    }
+        /** Pre-increment operator. */
+        BSTIterator<Data>& operator++() {
+            curr = curr->successor();
+            return *this;
+        }
 
-    /** Post-increment operator. */
-    BSTIterator<Data> operator++(int) {
-        BSTIterator before = BSTIterator(curr);
-        ++(*this);
-        return before;
-    }
+        /** Post-increment operator. */
+        BSTIterator<Data> operator++(int) {
+            BSTIterator before = BSTIterator(curr);
+            ++(*this);
+            return before;
+        }
 
-    /** TODO */
-    bool operator==(BSTIterator<Data> const& other) const { 
-        
-	return curr == other.curr;
-    
-    }
+        /** The equality operator. Checks to see if the node 
+         *  pointers are equal */
+        bool operator==(BSTIterator<Data> const& other) const { 
 
-    /** TODO */
-    bool operator!=(BSTIterator<Data> const& other) const { 
-    
-        return curr != other.curr;
-    
-    }
+            return curr == other.curr;
+
+        }
+
+        /** The inequality operator. Checks to see if the Node pointers 
+         *  are not the same 
+         */
+        bool operator!=(BSTIterator<Data> const& other) const { 
+
+            return curr != other.curr;
+
+        }
 };
 
 #endif  // BSTITERATOR_HPP

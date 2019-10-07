@@ -27,10 +27,16 @@ class BST {
          */
         BST() : root(0), isize(0), iheight(-1) {}
 
-        /** TODO */
+        /** Destructor method for BST. Deletes all nodes using deleteAll
+         *  Parameter: root - the root node of the BST
+         */
         virtual ~BST() { deleteAll(root); }
 
-        /** TODO */
+        /** A method that inserts a Node into the BST. The method climbs down
+         *  the tree utill it finds an empty space for the item. If the item
+         *  is already in the tree, the function will not add it again.
+         *  Parameter: item - The Data to be added into the tree via a Node
+         */
         virtual bool insert(const Data& item) { 
 
             //create a pointer for the current node at root track the height
@@ -81,7 +87,11 @@ class BST {
 
         }
 
-        /** TODO */
+        /** Finds the item in the BST and returns an iterator pointing to
+         *  the BSTNode which contains the item. If the item is not found,
+         *  it returns an iterator that points to a nullptr.
+         *  Parameter: item - the Data item that is searched in the BST
+         */
         virtual iterator find(const Data& item) const { 
 
             //recurse down the tree trying to find the node
@@ -89,11 +99,11 @@ class BST {
             while( currNode != nullptr ) { 
 
                 //check to see if item is >, <, = current node
-                if( item < currnode ) {
+                if( item.data < currNode->data ) {
 
                     currNode = currNode->left;
 
-                } else if( currNode < item ) { 
+                } else if( currNode->data < item.data ) { 
 
                     currNode = currNode->right;
 
@@ -111,28 +121,30 @@ class BST {
 
         }
 
-        /** TODO */
+        /** Returns the size of the tree */
         unsigned int size() const {
 
             return isize;
 
         }
 
-        /** TODO */
+        /** Returns the height of the tree */
         int height() const {
 
             return iheight;
 
         }
 
-        /** TODO */
+        /** Returns true if the BST is empty, false if not. */
         bool empty() const {
 
             return root == 0;
 
         }
 
-        /** TODO */
+        /** Returns an iterator pointing to the smallest element of this BST.
+         *  Uses a helper function, first to find the Node. 
+         */
         iterator begin() const { return BST::iterator(first(root)); }
 
         /** Return an iterator pointing past the last item in the BST.
@@ -143,10 +155,27 @@ class BST {
         vector<Data> inorder() const {}
 
     private:
-        /** TODO */
-        static BSTNode<Data>* first(BSTNode<Data>* root) { return 0; }
+        /** Returns a pointer to the smallest/first node in the BST 
+         *  Parameter: root - a pointer to the root Node of the BST
+         */
+        static BSTNode<Data>* first(BSTNode<Data>* root) {
 
-        /** TODO */
+            //set the current node to the root passed in
+            BSTNode<Data>* currNode = root;
+            //keep recursing left on the tree
+            while( currNode->left != nullptr ) {
+                currNode = currNode->left;
+            }
+            //return the leftmost node which is the smallest/first
+            return currNode;
+
+        }
+
+        /** Deletes each node in the BST recursively. First it recurses left,
+         *  then it recurses right, and then it deletes the current node.
+         *  If the node is null then it returns.
+         *  Parameter: n - the current node in the recursion. 
+         */
         static void deleteAll(BSTNode<Data>* n) {
             if( n == nullptr ) {
                 return;

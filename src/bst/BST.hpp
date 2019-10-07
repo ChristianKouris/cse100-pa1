@@ -82,7 +82,34 @@ class BST {
     }
 
     /** TODO */
-    virtual iterator find(const Data& item) const { return 0; }
+    virtual iterator find(const Data& item) const { 
+    
+        //recurse down the tree trying to find the node
+	BSTNode<Data>* currNode = root;
+	while( currNode != nullptr ) { 
+	
+	    //check to see if item is >, <, = current node
+	    if( item < currnode ) {
+	    
+	        currNode = currNode->left;
+	    
+	    } else if( currNode < item ) { 
+	    
+	        currNode = currNode->right;
+	    
+	    } else {
+	    
+	        return BSTIterator<Data>(currNode);
+	    
+	    }
+	
+
+	} //end while loop
+
+	//if we haven't found it, return a nullptr iterator
+	return BSTIterator<Data>(nullptr);
+    
+    }
 
     /** TODO */
     unsigned int size() const {
@@ -121,12 +148,6 @@ class BST {
 
     /** TODO */
     static void deleteAll(BSTNode<Data>* n) {
-        /* Pseudocode:
-           if current node is null: return;
-           recursively delete left sub-tree
-           recursively delete right sub-tree
-           delete current node
-        */
          if( n == nullptr ) {
 	     return;
 	 }

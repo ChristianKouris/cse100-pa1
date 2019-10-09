@@ -65,7 +65,7 @@ class BST {
                         // set its parent and the size and height of the tree
                         currNode->left = new BSTNode<Data>( item );
                         currNode->left->parent = currNode;
-                        isize++; curHeight++;
+                        isize++; currHeight++;
                         if( iheight < currHeight ) {
                             iheight = currHeight;
                         }
@@ -88,7 +88,7 @@ class BST {
                         // set its parent and the size and height of the tree
                         currNode->right = new BSTNode<Data>( item );
                         currNode->right->parent = currNode;
-                        isize++; curHeight++;
+                        isize++; currHeight++;
                         if( iheight < currHeight ) {
                             iheight = currHeight;
                         }
@@ -177,12 +177,14 @@ class BST {
          */
         iterator end() const { return typename BST<Data>::iterator(0); }
 
-        /** TODO */
+        /** Returns a vector of the data in order from smallest to largest.
+         *  It achieves this by recursing through the tree using orderNodes
+         */
         vector<Data> inorder() const { 
 
             //create an empty vector, order it, and return it
             std::vector<Data> ordered;
-            orderNodes( ordered, n ); 
+            orderNodes( ordered, root ); 
             return ordered; 
 
         }
@@ -220,6 +222,11 @@ class BST {
             delete n;
         }
 
+        /** This method traverses through the tree and adds the data of
+         *  each node into the vector given. It does in order traversal.
+         *  Parameter: arr - reference to vector containing in-order data
+         *  Parameter: n - the pointer to the current node of the traversal
+         */
         static void orderNodes( vector<Data>& arr, BSTNode<Data>* n ) {
 
             //base case if null return

@@ -47,7 +47,7 @@ class BSTNode {
             //Case 2: successor is a parent
             successor = this;
             //loop through the parents to see if they branch left
-            while (successor->parent != nullptr ) {
+            while (successor != nullptr && successor->parent != nullptr ) {
 
                 if( successor->parent->left == successor) {
                     return successor->parent;

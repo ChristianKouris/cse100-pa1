@@ -30,26 +30,33 @@ class BSTNode {
          */
         BSTNode<Data>* successor() {
 
-            BSTNode<Data>* successor = root;
-            while( successor != nullptr) {
+            //Case 1: successor is in the right subtree
+            BSTNode<Data>* successor = right;
+            // it will only go through this loop if right exists
+            while( successor != nullptr ) {
 
-                if( data < successor.data ) {
-                
-                    //check to see if you can keep going left
-                    if ( successor->left == nullptr ) {
-                        return successor;
-                    }
+                //after we go right the first time, we only want to go left
+                if( successor->left != nullptr ) {
                     successor = successor->left;
-                
                 } else {
-                    
-                    successor = successor->right;   
-                
-                } 
+                    return successor;
+                }
 
             }
-            //returns nullptr is not found
-            return successor;
+
+            //Case 2: successor is a parent
+            successor = this;
+            //loop through the parents to see if they branch left
+            while (successor->parent != nullptr ) {
+
+                if( successor->parent->left == successor) {
+                    return successor->parent;
+                }
+
+            }
+
+            //Case 3: there is no successor
+            return nullptr;
 
         }
 };

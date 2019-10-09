@@ -39,16 +39,39 @@ class BST {
          */
         virtual bool insert(const Data& item) { 
 
+            //empty BST base case
+            if( root == 0 ) {
+           
+                root = new BSTNode<Data>( item );
+                iheight = 0;
+                isize++;
+
+            }
+
             //create a pointer for the current node at root track the height
             BSTNode<Data>* currNode = root;
-            int currHeight = 0; 
+            int currHeight = 0;
 
             //loop down the tree until we reach where there isn't a node
-            while( currnode != nullptr ) {
+            while( currNode != nullptr ) {
 
                 //check to see if item is less than the current node
-                if( item.data < currNode->data ) {
+                if( item < currNode->data ) {
 
+                    //check to see if we are at the end
+                    if( currNode->left == nullptr ) {
+
+                        // create a copy of the node passed into the parameter
+                        // set its parent and the size and height of the tree
+                        currNode->left = new BSTNode<Data>( item );
+                        currNode->left->parent = currNode;
+                        isize++; curHeight++;
+                        if( iheight < currHeight ) {
+                            iheight = currHeight;
+                        }
+                        return true
+
+                    }
                     // make the left node the current node
                     currNode = currNode->left;
                     //increment the height since we are going down a level
@@ -56,8 +79,22 @@ class BST {
 
                 }
                 //check to see if item is greater than the current node
-                else if( currNode->data < item.data ) {
+                else if( currNode->data < item ) {
 
+                    //check to see if we are at the end
+                    if( currNode->right == nullptr ) {
+
+                        // create a copy of the node passed into the parameter
+                        // set its parent and the size and height of the tree
+                        currNode->right = new BSTNode<Data>( item );
+                        currNode->right->parent = currNode;
+                        isize++; curHeight++;
+                        if( iheight < currHeight ) {
+                            iheight = currHeight;
+                        }
+                        return true
+
+                    }
                     // if there is a right child, make it the current node
                     currNode = currNode->right;
                     //increment the height since we are going down a branch
@@ -70,19 +107,8 @@ class BST {
                     return false;
                 }
 
-            }
+            } //end the loop down the tree
 
-            // now we are at the position where this new node should be
-            // create a copy of the node passed into the parameter
-            BSTNode<Data>* copyNode = new BSTNode<Data>( item.data );
-            currNode = copyNode;
-            //increment size and check to see if the height grew
-            isize++;
-            if( iheight < currheight ) {
-
-                iheight = currheight;
-
-            }
             return true;
 
         }
@@ -99,11 +125,11 @@ class BST {
             while( currNode != nullptr ) { 
 
                 //check to see if item is >, <, = current node
-                if( item.data < currNode->data ) {
+                if( item < currNode->data ) {
 
                     currNode = currNode->left;
 
-                } else if( currNode->data < item.data ) { 
+                } else if( currNode->data < item ) { 
 
                     currNode = currNode->right;
 
@@ -152,7 +178,7 @@ class BST {
         iterator end() const { return typename BST<Data>::iterator(0); }
 
         /** TODO */
-        vector<Data> inorder() const {}
+        vector<Data> inorder() const { return vector<Data>(0); }
 
     private:
         /** Returns a pointer to the smallest/first node in the BST 

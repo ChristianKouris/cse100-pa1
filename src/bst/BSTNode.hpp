@@ -30,17 +30,25 @@ class BSTNode {
          */
         BSTNode<Data>* successor() {
 
-            BSTNode<Data>* successor = right;
-            if( successor == nullptr ) {
+            BSTNode<Data>* successor = root;
+            while( successor != nullptr) {
 
-                return nullptr;
+                if( data < successor.data ) {
+                
+                    //check to see if you can keep going left
+                    if ( successor->left == nullptr ) {
+                        return successor;
+                    }
+                    successor = successor->left;
+                
+                } else {
+                    
+                    successor = successor->right;   
+                
+                } 
 
             }
-            while( successor->left != nullptr ) {
-
-                successor = successor->left;
-
-            }
+            //returns nullptr is not found
             return successor;
 
         }

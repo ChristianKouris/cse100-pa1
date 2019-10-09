@@ -69,7 +69,7 @@ class BST {
                         if( iheight < currHeight ) {
                             iheight = currHeight;
                         }
-                        return true
+                        return true;
 
                     }
                     // make the left node the current node
@@ -92,7 +92,7 @@ class BST {
                         if( iheight < currHeight ) {
                             iheight = currHeight;
                         }
-                        return true
+                        return true;
 
                     }
                     // if there is a right child, make it the current node
@@ -178,7 +178,14 @@ class BST {
         iterator end() const { return typename BST<Data>::iterator(0); }
 
         /** TODO */
-        vector<Data> inorder() const { return vector<Data>(0); }
+        vector<Data> inorder() const { 
+
+            //create an empty vector, order it, and return it
+            std::vector<Data> ordered;
+            orderNodes( ordered, n ); 
+            return ordered; 
+
+        }
 
     private:
         /** Returns a pointer to the smallest/first node in the BST 
@@ -211,6 +218,21 @@ class BST {
             deleteAll(n->left);
             deleteAll(n->right);
             delete n;
+        }
+
+        static void orderNodes( vector<Data>& arr, BSTNode<Data>* n ) {
+
+            //base case if null return
+            if( n == nullptr ) {
+                return;
+            }
+            //recurse left
+            orderNodes( arr, n->left );
+            //add to end of vector
+            arr.push_back( n->data );
+            //recurse right
+            orderNodes( arr, n->right );
+
         }
 };
 

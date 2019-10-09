@@ -19,6 +19,7 @@ using namespace testing;
  * may vary. See test_BST.cpp for more information on
  * test fixtures.
  */
+ /*
 class SmallKDTFixture : public ::testing::Test {
   protected:
     vector<Point> vec;
@@ -46,4 +47,4 @@ TEST_F(SmallKDTFixture, TEST_NEAREST_POINT) {
     Point queryPoint({5.81, 3.21});
     Point* closestPoint = naiveSearch.findNearestNeighbor(queryPoint);
     ASSERT_EQ(*kdt.findNearestNeighbor(queryPoint), *closestPoint);
-}
+}*/

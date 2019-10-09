@@ -164,7 +164,7 @@ class BST {
         /** Returns true if the BST is empty, false if not. */
         bool empty() const {
 
-            return root == 0;
+            return (root == 0);
 
         }
 

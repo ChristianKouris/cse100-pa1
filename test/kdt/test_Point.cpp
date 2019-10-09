@@ -11,7 +11,7 @@
 
 using namespace std;
 using namespace testing;
-
+/*
 TEST(PointTests, TEST_EQUALS) {
     vector<double> p1Values{3, 4, 5, 6};
     Point p1(p1Values);
@@ -31,4 +31,4 @@ TEST(PointTests, TEST_DISTANCE) {
 
     p1.setDistToQuery(p2);
     ASSERT_DOUBLE_EQ(p1.distToQuery, 1.0);
-}
+} */

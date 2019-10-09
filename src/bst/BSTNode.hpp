@@ -53,6 +53,8 @@ class BSTNode {
                     return successor->parent;
                 }
 
+                successor = successor->parent;
+
             }
 
             //Case 3: there is no successor

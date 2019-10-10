@@ -198,7 +198,7 @@ class BST {
             //set the current node to the root passed in
             BSTNode<Data>* currNode = root;
             //keep recursing left on the tree
-            while( currNode->left != nullptr ) {
+            while( currNode != nullptr && currNode->left != nullptr ) {
                 currNode = currNode->left;
             }
             //return the leftmost node which is the smallest/first

@@ -66,11 +66,11 @@ class KDT {
         return {};
     }
 
-    /** TODO */
-    unsigned int size() const { return 0; }
+    /** Returns the size of the KDT */
+    unsigned int size() const { return isize; }
 
-    /** TODO */
-    int height() const { return 0; }
+    /** Returns the height of the KDT */
+    int height() const { return iheight; }
 
   private:
     /** TODO */
@@ -87,8 +87,19 @@ class KDT {
                            vector<pair<double, double>>& queryRegion,
                            unsigned int curDim) {}
 
-    /** TODO */
-    static void deleteAll(KDNode* n) {}
+    /** Deletes all of the KDT nodes from the heap.
+     *  Parameter: n - the pointer to the current node in the recursion.
+     */
+    static void deleteAll(KDNode* n) {
+
+        if( n == nullptr ) {
+            return;
+        }
+        deleteAll( n->left );
+        deleteAll( n->right );
+        delete n;
+
+    }
 
     // Add your own helper methods here
 };

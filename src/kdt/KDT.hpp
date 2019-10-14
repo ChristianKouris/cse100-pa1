@@ -63,8 +63,9 @@ class KDT {
             return;
         }
         //set member variables for the root Node
-        isize = 1; iheight = 0; curDim = 0; 
+        isize = 1; iheight = 0; 
         //define new variables to help organize logic
+        unsigned int curDim = 0;
         unsigned int start = 0; unsigned int end = points.size();
         unsigned int median = (start+end)/2;
 
@@ -74,17 +75,63 @@ class KDT {
         root = new KDNode( points[median] );
         
         //call the helper method for the root's children
-        root->left = buildSubtree( points, start, median, curDim + 1, 1 )
-        root->right = buildSubtree( points, median + 1, end, curDim + 1, 1 )
+        root->left = buildSubtree( points, start, median, curDim + 1, 1 );
+        root->right = buildSubtree( points, median + 1, end, curDim + 1, 1 );
 
     }
 
-    /** TODO */
-    Point* findNearestNeighbor(Point& queryPoint) { return nullptr; }
+    /** Return the point in the KDT that is the closest to the queryPoint.
+     *  Has a best case time of iheight and a worst case time of isize.
+     *  Parameter: queryPoint - The point that we want the nearest neighbor
+     */
+    Point* findNearestNeighbor(Point& queryPoint) {
+
+        //check to see if the tree is empty
+        if( root == 0 ) { return nullptr; }
+
+        //set root as the nearest neighbor and set it's distance
+        nearestNeighbor = root->point;
+        nearestNeighbor.setDistToQuery( queryPoint );
+        unsigned int curDim = 0;
+
+        //check to see if the query point dim is > or <= to root's point
+        if( queryPoint.features[curDim] < root->point.features[curDim] ) {
+
+            //recurse down the right since it's closer to point's dim
+            findNNHelper( root->right, queryPoint, curDim+1 );
+            
+            //calculate x-x0 for whatever dim 0
+            double dimDist = pow( root->point.features[curDim] - 
+                                  queryPoint.features[curDim], 2.0 );
+            //if distance in one dim is closer than nearest neighbor, recurse
+            if( dimDist < nearestNeighbor.distToQuery ) {
+                findNNHelper( root->left, queryPoint, curDim+1 );
+            }
+
+        } else {
+
+            //recurse down the left since it's closer to root point's dim
+            findNNHelper( root->left, queryPoint, curDim+1 );
+            
+            //calculate x-x0 for whatever dimension we're at
+            double dimDist = pow( root->point.features[curDim] - 
+                                  queryPoint.features[curDim], 2.0 );
+            //if dim 0 distance is shorter than closest neighbor, recurse
+            if( dimDist < nearestNeighbor.distToQuery ) {
+                findNNHelper( root->right, queryPoint, curDim+1 );
+            }
+        
+        }
+
+        return &nearestNeighbor;
+
+    }
 
     /** Extra credit */
     vector<Point> rangeSearch(vector<pair<double, double>>& queryRegion) {
-        return {};
+        //remove the compiler warnings 
+        queryRegion.empty();
+        return vector<Point>(0);
     }
 
     /** Returns the size of the KDT */
@@ -110,11 +157,11 @@ class KDT {
         }
         //sort this part of the list
         std::sort(points.begin() + start, points.begin() + end, 
-                  CompareValueAt(curDim % points.begin().curDim) );
+                  CompareValueAt(curDim % points[0].numDim) );
 
         //allocate memory for the median Node
         unsigned int median = (start+end)/2;
-        KDTNode * medNode = new KDTNode( points[median] );
+        KDNode * medNode = new KDNode( points[median] );
 
         //recurse left and right
         medNode->left = buildSubtree( points, start, median, 
@@ -132,13 +179,66 @@ class KDT {
         
     }
 
-    /** TODO */
-    void findNNHelper(KDNode* node, Point& queryPoint, unsigned int curDim) {}
+    /** A helper method to help find the nearest neighbor and to 
+     *  reduce the branches we search. At each level, this method
+     *  determines which side of the node the querypoint falls under.
+     *  Parameter: node - the current node inn our traversal
+     *  Parameter: queryPoint - the point we want to find the neighbor of
+     *  Parameter: curDim - the current dimension of the point in traversal
+     */
+    void findNNHelper(KDNode* node, Point& queryPoint, unsigned int curDim) {
+
+        //if we are at the end, return
+        if( node == nullptr ) { return; }
+
+        //check to see if this current node's point is the closest to query
+        node->point.setDistToQuery( queryPoint );
+        if( nearestNeighbor.distToQuery < node->point.distToQuery ) {
+            nearestNeighbor = node->point;
+        }
+
+        //check to see if the query point dim is > or <= to node's point
+        if( queryPoint.features[curDim] < node->point.features[curDim] ) {
+
+            //recurse down the right since it's closer to point's dim
+            findNNHelper( node->right, queryPoint, curDim+1 );
+            
+            //calculate x-x0 for whatever dimension we're at
+            double dimDist = pow( node->point.features[curDim] - 
+                                  queryPoint.features[curDim], 2.0 );
+            //if distance in one dim is closer than nearest neighbor, recurse
+            if( dimDist < nearestNeighbor.distToQuery ) {
+                findNNHelper( node->left, queryPoint, curDim+1 );
+            }
+
+        } else {
+
+            //recurse down the left since it's closer to point's dim
+            findNNHelper( node->left, queryPoint, curDim+1 );
+            
+            //calculate x-x0 for whatever dimension we're at
+            double dimDist = pow( node->point.features[curDim] - 
+                                  queryPoint.features[curDim], 2.0 );
+            //if distance in one dim is closer than nearest neighbor, recurse
+            if( dimDist < nearestNeighbor.distToQuery ) {
+                findNNHelper( node->right, queryPoint, curDim+1 );
+            }
+        
+        }
+
+    }
 
     /** Extra credit */
     void rangeSearchHelper(KDNode* node, vector<pair<double, double>>& curBB,
                            vector<pair<double, double>>& queryRegion,
-                           unsigned int curDim) {}
+                           unsigned int curDim) {
+    // remove the compiler warnings
+    node->point.features[0]++;
+    curBB.empty();
+    queryRegion.empty();
+    curDim++;
+
+    }
 
     /** Deletes all of the KDT nodes from the heap.
      *  Parameter: n - the pointer to the current node in the recursion.

@@ -12,7 +12,7 @@
 using namespace std;
 using namespace testing;
 
-TEST(PointTests, TEST_EQUALS) {
+TEST(PointTests, TEST_NOT_EQUALS) {
     vector<double> p1Values{3, 4, 5, 6};
     Point p1(p1Values);
 
@@ -32,3 +32,35 @@ TEST(PointTests, TEST_DISTANCE) {
     p1.setDistToQuery(p2);
     ASSERT_DOUBLE_EQ(p1.distToQuery, 1.0);
 }
+
+TEST(PointTests, TEST_EQUALS) {
+
+    vector<double> p1Values{1, 10};
+    vector<double> p2Values{1, 10};
+    
+    Point p1(p1Values);
+    Point p2(p2Values);
+
+    ASSERT_EQ(p1, p2);
+
+}
+
+TEST(PointTests, TEST_VALUE_AT) {
+
+    vector<double> pointValues{5, 200, 18, 54};
+    Point point(pointValues);
+    
+    ASSERT_EQ(point.valueAt(0), 5);
+    ASSERT_EQ(point.valueAt(3), 54);
+
+}
+
+TEST(PointTests, TEST_NUM_DIM) {
+
+    vector<double> pointValues{5, 2, 181, 74, 1, 99, 527};
+    Point point(pointValues);
+    
+    ASSERT_EQ(point.numDim, 7);
+
+}
+

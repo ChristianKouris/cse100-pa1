@@ -131,7 +131,7 @@ class KDT {
     vector<Point> rangeSearch(vector<pair<double, double>>& queryRegion) {
         //remove the compiler warnings 
         queryRegion.empty();
-        return vector<Point>(0);
+        return vector<Point>({ Point({0}) });
     }
 
     /** Returns the size of the KDT */
@@ -193,7 +193,7 @@ class KDT {
 
         //check to see if this current node's point is the closest to query
         node->point.setDistToQuery( queryPoint );
-        if( nearestNeighbor.distToQuery < node->point.distToQuery ) {
+        if( node->point.distToQuery < nearestNeighbor.distToQuery ) {
             nearestNeighbor = node->point;
         }
 
@@ -233,10 +233,7 @@ class KDT {
                            vector<pair<double, double>>& queryRegion,
                            unsigned int curDim) {
     // remove the compiler warnings
-    node->point.features[0]++;
-    curBB.empty();
-    queryRegion.empty();
-    curDim++;
+    node->point.features[0]++;curBB.empty();queryRegion.empty();curDim++;
 
     }
 

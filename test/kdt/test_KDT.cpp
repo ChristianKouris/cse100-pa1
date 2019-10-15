@@ -48,3 +48,13 @@ TEST_F(SmallKDTFixture, TEST_NEAREST_POINT) {
     Point* closestPoint = naiveSearch.findNearestNeighbor(queryPoint);
     ASSERT_EQ(*kdt.findNearestNeighbor(queryPoint), *closestPoint);
 }
+
+TEST_F(SmallKDTFixture, TEST_HEIGHT) {
+    // Assert that the kd tree has the correct height
+    ASSERT_EQ(kdt.height(), 2);
+}
+
+TEST_F(SmallKDTFixture, TEST_ZERO_RANGE_SEARCH) {
+    vector<pair<double, double>> queryRegion;
+    ASSERT_EQ(kdt.rangeSearch(queryRegion)[0], Point({0}) );
+}

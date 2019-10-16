@@ -1,3 +1,14 @@
+/** The purpose of the KDT is to organize a set of n-dimensional points
+ *  in a binary tree structure. As the tree goes into higher levels, the
+ *  region that is either the left child or right of the current point
+ *  gets smaller and more specific. This file takes a vector of points and
+ *  can build a tree out of it. It can also find the nearest one of these
+ *  points to a specific query point.
+ *  Author: Christian Kouris
+ *  Email: ckouris@ucsd.edu
+ *  Sources: std::vector c++ docs, std::sort c++docs
+ */
+
 #ifndef KDT_HPP
 #define KDT_HPP
 
@@ -7,8 +18,15 @@
 #include <vector>     // vector<typename>
 #include "Point.hpp"
 
+#define MEDIAN_DIVISOR 2
+#define SQUARED 2.0
+
 using namespace std;
 
+/** The KDT class builds a balanced KD Tree from a vector of n dimensional 
+ *  points. The constructor itself does virtually nothing, the user has to
+ *  use the build method to create the KD Tree.
+ */
 class KDT {
   private:
     /** Inner class which defines a KD tree node */
@@ -67,7 +85,7 @@ class KDT {
         //define new variables to help organize logic
         unsigned int curDim = 0;
         unsigned int start = 0; unsigned int end = points.size();
-        unsigned int median = (start+end)/2;
+        unsigned int median = (start+end)/MEDIAN_DIVISOR;
 
         //sort the points vector
         std::sort(points.begin(), points.end(), CompareValueAt(curDim));
@@ -104,7 +122,7 @@ class KDT {
             
             //calculate x-x0 for whatever dim 0
             double dimDist = pow( root->point.features[curDim] - 
-                                  queryPoint.features[curDim], 2.0 );
+                                  queryPoint.features[curDim], SQUARED );
             //if distance in one dim is closer than nearest neighbor, recurse
             if( dimDist < threshold ) {
                 findNNHelper( root->right, queryPoint,
@@ -119,7 +137,7 @@ class KDT {
             
             //calculate x-x0 for whatever dimension we're at
             double dimDist = pow( root->point.features[curDim] - 
-                                  queryPoint.features[curDim], 2.0 );
+                                  queryPoint.features[curDim], SQUARED );
             //if dim 0 distance is shorter than closest neighbor, recurse
             if( dimDist < threshold ) {
                 findNNHelper( root->left, queryPoint, 
@@ -165,7 +183,7 @@ class KDT {
                   CompareValueAt(curDim % points[0].numDim) );
 
         //allocate memory for the median Node
-        unsigned int median = (start+end)/2;
+        unsigned int median = (start+end)/MEDIAN_DIVISOR;
         KDNode * medNode = new KDNode( points[median] );
 
         //recurse left and right
@@ -212,7 +230,7 @@ class KDT {
             
             //calculate x-x0 for whatever dimension we're at
             double dimDist = pow( node->point.features[curDim] - 
-                                  queryPoint.features[curDim], 2.0 );
+                                  queryPoint.features[curDim], SQUARED );
             //if distance in one dim is closer than nearest neighbor, recurse
             if( dimDist < threshold ) {
                 findNNHelper( node->right, queryPoint,
@@ -227,7 +245,7 @@ class KDT {
             
             //calculate x-x0 for whatever dimension we're at
             double dimDist = pow( node->point.features[curDim] - 
-                                  queryPoint.features[curDim], 2.0 );
+                                  queryPoint.features[curDim], SQUARED );
             //if distance in one dim is closer than nearest neighbor, recurse
             if( dimDist < threshold ) {
                 findNNHelper( node->left, queryPoint,

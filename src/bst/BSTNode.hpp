@@ -1,11 +1,23 @@
+/** This file creates the BST Node to be used by the clss BST. The node's
+ *  function is to create an object in memory that holds Data. In the grand
+ *  scheme of the BST, the node will have its parent, right, and left
+ *  parameters be connected with other nodes.
+ *  Author: Christian Kouris
+ *  Email: ckouris@ucsd.edu
+ *  Sources: None.
+ */
 #ifndef BSTNODE_HPP
 #define BSTNODE_HPP
 #include <iomanip>
 #include <iostream>
 using namespace std;
 
+/** The BST Node is a class that is meant to hold a single datum and 
+ *  is meant to be connected to other nodes in a binary search tree.
+ *  The constructor sets the data value and has the parent, left, and right
+ *  nodes be null. 
+ */
 template <typename Data>
-
 class BSTNode {
     public:
         BSTNode<Data>* left;

@@ -1,3 +1,11 @@
+/** This is the iterator for the BSTNode. The iterator can be traversed 
+ *  forward but not backwards, has an equality an inequality operator, and
+ *  can be derefrenced.
+ *  Author: Christian Kouris
+ *  Email: ckouris@ucsd.edu
+ *  Sources: cplusplus.com/reference/iterator/
+ */
+
 #ifndef BSTITERATOR_HPP
 #define BSTITERATOR_HPP
 #include <iterator>
@@ -5,6 +13,11 @@
 #include "BSTNode.hpp"
 using namespace std;
 
+/** The BSTIterator initializes with a BSTNode pointer and when dereferenced,
+ *  returns the BSTNode's data. It uses the successor method to traverse 
+ *  forward to the next iterator. In the equality and inequality operators,
+ *  the iterator compares the BSTNode pointers to determine equality.
+ */
 template <typename Data>
 class BSTIterator : public iterator<input_iterator_tag, Data> {
     private:

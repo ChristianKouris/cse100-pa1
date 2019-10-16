@@ -1,3 +1,15 @@
+/**
+ * The BST is a structure that has up to 2 children for each node. Also each
+ * left child has to be smaller than the parent and each right child has to
+ * be bigger than the parent. The BST can either be balanced or unbalanced
+ * depending on the order the data is inserted using the insert method.
+ * Seaarching a BST will have different results depending on if it's balanced,
+ * a balanced BST will have a worst case search time of O(log(n)) while a
+ * linear BST will have a worst case seaarch time of O(n) where n is the size
+ * Author: Christian Kouris
+ * Email: ckouris@ucsd.edu
+ * Sources: std::vector documentation, Stepik 3.1
+ */
 #ifndef BST_HPP
 #define BST_HPP
 #include <iostream>
@@ -6,6 +18,13 @@
 #include "BSTNode.hpp"
 using namespace std;
 
+/** The BST class has an empty constructor that initializes isize and root to 0
+ *  and iheight to -1. The BST is built by inserting Data one by one, the
+ *  first inserted ends up as the root and from there BST logic is enforced.
+ *  The two glamorous methods in this class are find and inorder. find 
+ *  searches for data in the BST and inorder returns a list of every
+ *  data in the BST in order from smallest to largest.
+ */
 template <typename Data>
 class BST {
     protected:

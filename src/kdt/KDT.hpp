@@ -99,27 +99,31 @@ class KDT {
         if( queryPoint.features[curDim] <= root->point.features[curDim] ) {
 
             //recurse down the right since it's closer to point's dim
-            findNNHelper( root->left, queryPoint, curDim+1 );
+            findNNHelper( root->left, queryPoint, 
+                          (curDim+1) % queryPoint.numDim );
             
             //calculate x-x0 for whatever dim 0
             double dimDist = pow( root->point.features[curDim] - 
                                   queryPoint.features[curDim], 2.0 );
             //if distance in one dim is closer than nearest neighbor, recurse
             if( dimDist < threshold ) {
-                findNNHelper( root->right, queryPoint, curDim+1 );
+                findNNHelper( root->right, queryPoint,
+                              (curDim+1) % queryPoint.numDim );
             }
 
         } else {
 
             //recurse down the left since it's closer to root point's dim
-            findNNHelper( root->right, queryPoint, curDim+1 );
+            findNNHelper( root->right, queryPoint, 
+                          (curDim+1) % queryPoint.numDim );
             
             //calculate x-x0 for whatever dimension we're at
             double dimDist = pow( root->point.features[curDim] - 
                                   queryPoint.features[curDim], 2.0 );
             //if dim 0 distance is shorter than closest neighbor, recurse
             if( dimDist < threshold ) {
-                findNNHelper( root->left, queryPoint, curDim+1 );
+                findNNHelper( root->left, queryPoint, 
+                              (curDim+1) % queryPoint.numDim );
             }
         
         }
@@ -203,27 +207,31 @@ class KDT {
         if( queryPoint.features[curDim] <= node->point.features[curDim] ) {
 
             //recurse down the left since it's closer to point's dim
-            findNNHelper( node->left, queryPoint, curDim+1 );
+            findNNHelper( node->left, queryPoint,
+                          (curDim+1) % queryPoint.numDim );
             
             //calculate x-x0 for whatever dimension we're at
             double dimDist = pow( node->point.features[curDim] - 
                                   queryPoint.features[curDim], 2.0 );
             //if distance in one dim is closer than nearest neighbor, recurse
             if( dimDist < threshold ) {
-                findNNHelper( node->right, queryPoint, curDim+1 );
+                findNNHelper( node->right, queryPoint,
+                              (curDim+1) % queryPoint.numDim );
             }
 
         } else {
 
             //recurse down the right since it's closer to point's dim
-            findNNHelper( node->right, queryPoint, curDim+1 );
+            findNNHelper( node->right, queryPoint, 
+                          (curDim+1) % queryPoint.numDim );
             
             //calculate x-x0 for whatever dimension we're at
             double dimDist = pow( node->point.features[curDim] - 
                                   queryPoint.features[curDim], 2.0 );
             //if distance in one dim is closer than nearest neighbor, recurse
             if( dimDist < threshold ) {
-                findNNHelper( node->left, queryPoint, curDim+1 );
+                findNNHelper( node->left, queryPoint,
+                              (curDim+1) % queryPoint.numDim );
             }
         
         }

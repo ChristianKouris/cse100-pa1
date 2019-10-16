@@ -92,6 +92,7 @@ class KDT {
         //set root as the nearest neighbor and set it's distance
         nearestNeighbor = root->point;
         nearestNeighbor.setDistToQuery( queryPoint );
+        threshold = nearestNeighbor.distToQuery;
         unsigned int curDim = 0;
 
         //check to see if the query point dim is > or <= to root's point
@@ -104,7 +105,7 @@ class KDT {
             double dimDist = pow( root->point.features[curDim] - 
                                   queryPoint.features[curDim], 2.0 );
             //if distance in one dim is closer than nearest neighbor, recurse
-            if( dimDist < nearestNeighbor.distToQuery ) {
+            if( dimDist < threshold ) {
                 findNNHelper( root->right, queryPoint, curDim+1 );
             }
 
@@ -117,7 +118,7 @@ class KDT {
             double dimDist = pow( root->point.features[curDim] - 
                                   queryPoint.features[curDim], 2.0 );
             //if dim 0 distance is shorter than closest neighbor, recurse
-            if( dimDist < nearestNeighbor.distToQuery ) {
+            if( dimDist < threshold ) {
                 findNNHelper( root->left, queryPoint, curDim+1 );
             }
         
@@ -195,6 +196,7 @@ class KDT {
         node->point.setDistToQuery( queryPoint );
         if( node->point.distToQuery < nearestNeighbor.distToQuery ) {
             nearestNeighbor = node->point;
+            threshold = nearestNeighbor.distToQuery;
         }
 
         //check to see if the query point dim is > or <= to node's point
@@ -207,7 +209,7 @@ class KDT {
             double dimDist = pow( node->point.features[curDim] - 
                                   queryPoint.features[curDim], 2.0 );
             //if distance in one dim is closer than nearest neighbor, recurse
-            if( dimDist < nearestNeighbor.distToQuery ) {
+            if( dimDist < threshold ) {
                 findNNHelper( node->left, queryPoint, curDim+1 );
             }
 
@@ -220,7 +222,7 @@ class KDT {
             double dimDist = pow( node->point.features[curDim] - 
                                   queryPoint.features[curDim], 2.0 );
             //if distance in one dim is closer than nearest neighbor, recurse
-            if( dimDist < nearestNeighbor.distToQuery ) {
+            if( dimDist < threshold ) {
                 findNNHelper( node->left, queryPoint, curDim+1 );
             }
         

@@ -194,7 +194,7 @@ class KDT {
 
         //check to see if this current node's point is the closest to query
         node->point.setDistToQuery( queryPoint );
-        if( node->point.distToQuery < nearestNeighbor.distToQuery ) {
+        if( node->point.distToQuery < threshold ) {
             nearestNeighbor = node->point;
             threshold = nearestNeighbor.distToQuery;
         }
@@ -202,7 +202,7 @@ class KDT {
         //check to see if the query point dim is > or <= to node's point
         if( queryPoint.features[curDim] <= node->point.features[curDim] ) {
 
-            //recurse down the right since it's closer to point's dim
+            //recurse down the left since it's closer to point's dim
             findNNHelper( node->left, queryPoint, curDim+1 );
             
             //calculate x-x0 for whatever dimension we're at
@@ -210,12 +210,12 @@ class KDT {
                                   queryPoint.features[curDim], 2.0 );
             //if distance in one dim is closer than nearest neighbor, recurse
             if( dimDist < threshold ) {
-                findNNHelper( node->left, queryPoint, curDim+1 );
+                findNNHelper( node->right, queryPoint, curDim+1 );
             }
 
         } else {
 
-            //recurse down the left since it's closer to point's dim
+            //recurse down the right since it's closer to point's dim
             findNNHelper( node->right, queryPoint, curDim+1 );
             
             //calculate x-x0 for whatever dimension we're at

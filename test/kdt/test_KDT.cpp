@@ -31,7 +31,7 @@ class SmallKDTFixture : public ::testing::Test {
         vec.emplace_back(Point({3.2, 1.0}));
         vec.emplace_back(Point({5.7, 3.2}));
         vec.emplace_back(Point({1.8, 1.9}));
-        vec.emplace_back(Point({4.4, 2.2}));
+        vec.emplace_back(Point({3.4, 2.2}));
         kdt.build(vec);
     }
 };
@@ -47,6 +47,13 @@ TEST_F(SmallKDTFixture, TEST_NEAREST_POINT) {
     Point queryPoint({5.81, 3.21});
     Point* closestPoint = naiveSearch.findNearestNeighbor(queryPoint);
     ASSERT_EQ(*kdt.findNearestNeighbor(queryPoint), *closestPoint);
+}
+
+TEST_F(SmallKDTFixture, TEST_FORCE_DIFFERENT_SUBTREE) {
+
+    Point queryPoint({3.1, 2.2});
+    ASSERT_EQ(*kdt.findNearestNeighbor(queryPoint), Point({3.4,2.2}) );
+
 }
 
 TEST_F(SmallKDTFixture, TEST_HEIGHT) {

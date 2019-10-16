@@ -64,3 +64,16 @@ TEST(PointTests, TEST_NUM_DIM) {
 
 }
 
+TEST(PointTests, TEST_COMPARATOR) {
+
+    vector<double> p1Val{1, 2};
+    vector<double> p2Val{2, 1};
+    Point p1(p1Val);
+    Point p2(p2Val);
+
+    vector<Point> points{p1, p2};
+    std::sort(points.begin(), points.end(), CompareValueAt(1));
+
+    ASSERT_EQ( points[0].features[0], 2 );
+
+}
